@@ -4,13 +4,32 @@ TrailMapInterface V3.0
 Alexa Witkin
 """
 from flask import Flask, render_template, request, redirect, url_for, jsonify, make_response
-##from rgbmatrix import RGBMatrix, RGBMatrixOptions # from rpi-rgb-led-matrix lib
+from rgbmatrix import RGBMatrix, RGBMatrixOptions # from rpi-rgb-led-matrix lib
 from PIL import Image, ImageDraw, ImageFont # for led panel
-import pwinput as pw
 import sqlite3 # included in standard python distribution
-import pandas as pd
-import io
-import serial
+import threading
+import time
+
+## ----------------------------------------------------------------------------------------
+# Setup LED matrix
+options = RGBMatrixOptions()
+options.rows = 32
+options.cols = 64
+options.chain_length = 1 # increase once more panels are linked
+options.parallel = 1
+options.hardware_mapping = 'adafruit-hat'  # Change if needed
+options.gpio_slowdown = 4
+
+matrix = RGBMatrix(options=options)
+canvas = matrix.CreateFrameCanvas()
+
+display_lock = threading.Lock()
+
+# Global for current message
+current_message = "Welcome to Bromley!"
+message_lock = threading.Lock()
+
+## ----------------------------------------------------------------------------------------
 
 # List of all trail names
 TRAIL_NAMES = [
@@ -164,32 +183,51 @@ def api_lift_statuses():
     return jsonify(statuses)
 
 
-@app.route("/text", methods=["GET","POST"])
+@app.route("/text", methods=["GET", "POST"])
 def text():
+    global current_message
     con = sqlite3.connect('bromley_trailmap.db', isolation_level=None)
     cur = con.cursor()
 
-    cur.execute(f'SELECT status FROM Text WHERE text = "text";')
+    cur.execute('SELECT status FROM Text WHERE text = "text"')
     old_text = cur.fetchone()
-    print(old_text[0])
 
     if request.method == "POST":
-        new_text = request.form.get("value", None)
-        print(new_text)
+        new_text = request.form.get("value")
+        if new_text:
+            cur.execute('UPDATE Text SET status = ? WHERE text = "text"', (new_text,))
+            con.commit()
 
-        cur.execute(f'SELECT status FROM Text WHERE text = "text";')
-        old_text = cur.fetchone()
+            # Update LED text
+            with message_lock:
+                current_message = new_text
 
-        cur.execute(f'UPDATE Text SET status = "{new_text}" WHERE text = "text";')
-        con.commit()
-
-    cur.execute(f'SELECT status FROM Text WHERE text = "text";')
+    # Re-fetch updated text for rendering
+    cur.execute('SELECT status FROM Text WHERE text = "text"')
     old_text = cur.fetchone()
-    print(old_text[0])
 
+    con.close()
     return render_template("text.html", text=old_text[0])
 
-## TODO: write correct api integrations with raspberrypi for scrolling text
+
+def scrolling_text():
+    font = graphics.Font()
+    font.LoadFont("/home/pi/rpi-rgb-led-matrix/fonts/6x10.bdf")
+    text_color = graphics.Color(255, 255, 0)
+    pos = canvas.width
+
+    while True:
+        with message_lock:
+            msg = current_message
+
+        canvas.Clear()
+        text_len = graphics.DrawText(canvas, font, pos, 20, text_color, msg)
+        pos -= 1
+        if (pos + text_len < 0):
+            pos = canvas.width
+
+        canvas = matrix.SwapOnVSync(canvas)
+        time.sleep(0.05)
 
 
 @app.route("/help")
@@ -197,7 +235,11 @@ def help():
     return render_template("help.html")
 
 
+# Start the display loop when the app starts
+threading.Thread(target=scrolling_text, daemon=True).start()
+
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    #app.run(debug=True) # for local debugging (dev)
+    app.run(host="0.0.0.0", port=5000) # for network access
 
