@@ -1,0 +1,73 @@
+<!--
+home.html
+TrailMapInterface V2.0
+-->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <!-- This is a lead paragraph indicating the purpose of the form -->
+    <p class="lead">Bromley Mountain TrailMap</p>
+    <h1>Use the navigation bar at the top of the page to go to your desired section.</h1>
+    
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Trail Name</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for row in t_data %}
+            <tr>
+                <td>{{ row.trail }}</td>
+                <td>{{ row.status }}
+                    <div id="specific-trail-status">
+                        {% if row.status == "open" %}
+                        <img src="../static/open.png" alt="Open" width="30" height="30">
+                        {% elif row.status == "delayed" %}
+                        <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+                        {% elif row.status == "closed" %}
+                        <img src="../static/closed.png" alt="Closed" width="30" height="30">
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+        
+
+      </table>
+
+    <p>...</p>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Lift Name</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for row in l_data %}
+            <tr>
+                <td>{{ row.lift }}</td>
+                <td>{{ row.status }}
+                    <div id="specific-lift-status">
+                        {% if row.status == "open" %}
+                        <img src="../static/open.png" alt="Open" width="30" height="30">
+                        {% elif row.status == "delayed" %}
+                        <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+                        {% elif row.status == "closed" %}
+                        <img src="../static/closed.png" alt="Closed" width="30" height="30">
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+
+</div>
+{% endblock %}

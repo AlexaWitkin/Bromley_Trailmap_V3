@@ -1,0 +1,36 @@
+<!--
+text.html
+TrailMapInterface V2.0
+-->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <!-- This is a lead paragraph indicating the purpose of the form -->
+    <p class="lead">Text</p>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Currently Displaying:</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ text }} </td>
+            </tr>
+        </tbody>
+      </table>
+    
+    <form action="{{ url_for('text') }}" method="POST">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="value" placeholder="Type">
+        </div>
+    
+        <div class="button">
+            <input class="btn btn-primary" type="submit" value="Submit">
+        </div>
+    </form>
+
+</div>
+{% endblock %}

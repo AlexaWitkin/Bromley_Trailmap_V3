@@ -1,0 +1,926 @@
+<!--
+trails.html
+TrailMapInterface V2.0
+-->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <!-- This is a lead paragraph indicating the purpose of the form -->
+    <p class="lead">Trails</p>
+
+    <form action="{{ url_for('trails') }}" method="POST">
+
+    <h2>Easiest Trails</h2>
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="chase_it">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="chase_it">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="chase_it">Open</button>
+        <h4>Chase It</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[0] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[0] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[0] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="crackerjack">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="crackerjack">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="crackerjack">Open</button>
+        <h4>Crackerjack</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[1] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[1] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[1] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+    
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="learning_zone">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="learning_zone">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="learning_zone">Open</button>
+        <h4>Learning Zone</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[2] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[2] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[2] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="lower_boulevard">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="lower_boulevard">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="lower_boulevard">Open</button>
+        <h4>Lower Boulevard</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[3] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[3] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[3] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="lower_east_meadow">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="lower_east_meadow">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="lower_east_meadow">Open</button>
+        <h4>Lower East Meadow</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[4] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[4] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[4] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="lower_thruway">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="lower_thruway">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="lower_thruway">Open</button>
+        <h4>Lower Thruway</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[5] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[5] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[5] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="plaza">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="plaza">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="plaza">Open</button>
+        <h4>Plaza</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[6] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[6] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[6] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="proutys_past">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="proutys_past">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="proutys_past">Open</button>
+        <h4>Prouty's Past</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[7] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[7] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[7] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="run_around_1">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="run_around_1">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="run_around_1">Open</button>
+        <h4>Run Around 1</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[8] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[8] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[8] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="run_around_2">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="run_around_2">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="run_around_2">Open</button>
+        <h4>Run Around 2</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[9] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[9] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[9] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="run_around_3">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="run_around_3">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="run_around_3">Open</button>
+        <h4>Run Around 3</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[10] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[10] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[10] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="run_around_4">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="run_around_4">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="run_around_4">Open</button>
+        <h4>Run Around 4</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[11] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[11] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[11] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="school_slope">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="school_slope">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="school_slope">Open</button>
+        <h4>School Slope</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[12] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[12] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[12] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="woods_run">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="woods_run">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="woods_run">Open</button>
+        <h4>Woods Run</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[13] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[13] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[13] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+    <h2>Intermediate Trails</h2>
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="lift_line">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="lift_line">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="lift_line">Open</button>
+        <h4>Lift Line</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[14] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[14] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[14] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="lords_prayer">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="lords_prayer">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="lords_prayer">Open</button>
+        <h4>Lords Prayer</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[15] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[15] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[15] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="lower_twister">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="lower_twister">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="lower_twister">Open</button>
+        <h4>Lower Twister</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[16] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[16] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[16] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="pushover">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="pushover">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="pushover">Open</button>
+        <h4>Pushover</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[17] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[17] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[17] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="ridge">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="ridge">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="ridge">Open</button>
+        <h4>Ridge</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[18] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[18] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[18] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="route_100">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="route_100">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="route_100">Open</button>
+        <h4>Route 100</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[19] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[19] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[19] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="shincracker">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="shincracker">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="shincracker">Open</button>
+        <h4>Shincracker</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[20] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[20] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[20] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="snow_ranger">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="snow_ranger">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="snow_ranger">Open</button>
+        <h4>Snow Ranger</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[21] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[21] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[21] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="spring_trail">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="spring_trail">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="spring_trail">Open</button>
+        <h4>Spring Trail</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[22] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[22] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[22] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="sunset_pass">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="sunset_pass">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="sunset_pass">Open</button>
+        <h4>Sunset Pass</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[23] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[23] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[23] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="upper_boulevard">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="upper_boulevard">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="upper_boulevard">Open</button>
+        <h4>Upper Boulevard</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[24] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[24] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[24] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="upper_east_meadow">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="upper_east_meadow">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="upper_east_meadow">Open</button>
+        <h4>Upper East Meadow</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[25] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[25] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[25] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="upper_thruway">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="upper_thruway">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="upper_thruway">Open</button>
+        <h4>Upper Thruway</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[26] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[26] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[26] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="upper_twister">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="upper_twister">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="upper_twister">Open</button>
+        <h4>Upper Twister</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[27] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[27] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[27] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="west_meadow">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="west_meadow">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="west_meadow">Open</button>
+        <h4>West Meadow</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[28] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[28] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[28] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="yodeler">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="yodeler">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="yodeler">Open</button>
+        <h4>Yodeler</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[29] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[29] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[29] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+    <h2>Difficult Trails</h2>
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="avalanche">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="avalanche">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="avalanche">Open</button>
+        <h4>Avalanche</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[30] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[30] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[30] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="blue_ribbon">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="blue_ribbon">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="blue_ribbon">Open</button>
+        <h4>Blue Ribbon</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[31] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[31] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[31] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="corkscrew">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="corkscrew">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="corkscrew">Open</button>
+        <h4>Corkscrew</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[32] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[32] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[32] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="havoc">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="havoc">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="havoc">Open</button>
+        <h4>Havoc</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[33] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[33] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[33] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="little_dipper">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="little_dipper">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="little_dipper">Open</button>
+        <h4>Little Dipper</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[34] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[34] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[34] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="lower_stargazer">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="lower_stargazer">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="lower_stargazer">Open</button>
+        <h4>Lower Stargazer</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[35] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[35] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[35] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="no_name_chute">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="no_name_chute">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="no_name_chute">Open</button>
+        <h4>No Name Chute</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[36] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[36] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[36] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="pabst_panic">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="pabst_panic">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="pabst_panic">Open</button>
+        <h4>Pabst Panic</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[37] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[37] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[37] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="pabst_peril">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="pabst_peril">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="pabst_peril">Open</button>
+        <h4>Pabst Peril</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[38] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[38] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[38] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="stargazer">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="stargazer">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="stargazer">Open</button>
+        <h4>Stargazer</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[39] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[39] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[39] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="sunder">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="sunder">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="sunder">Open</button>
+        <h4>Sunder</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[40] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[40] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[40] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+    <h2>Terrain Park</h2>
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="the_garden">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="the_garden">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="the_garden">Open</button>
+        <h4>The Garden</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[41] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[41] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[41] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+    <h2>Glade Skiing</h2>
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="avalanche_glade">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="avalanche_glade">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="avalanche_glade">Open</button>
+        <h4>Avalanche Glade</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[42] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[42] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[42] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="everglade">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="everglade">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="everglade">Open</button>
+        <h4>Everglade</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[43] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[43] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[43] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="orion">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="orion">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="orion">Open</button>
+        <h4>Orion</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[44] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[44] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[44] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="spring_fling">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="spring_fling">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="spring_fling">Open</button>
+        <h4>Spring Fling</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[45] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[45] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[45] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="the_glade">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="the_glade">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="the_glade">Open</button>
+        <h4>The Glade</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[46] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[46] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[46] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="the_plunge">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="the_plunge">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="the_plunge">Open</button>
+        <h4>The Plunge</h4>
+        <div id="specific-trail-status">
+            {% if t_stat[47] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif t_stat[47] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif t_stat[47] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+
+    </form>
+
+      <!-- <script>
+        // Define your condition
+        let condition;
+        condition = "closed"; // Replace this with your logic for selecting the condition
+    
+        // Initialize variable for the selected image path
+        let selectedImage;
+    
+        // Use if statements to set the image path based on the condition
+        if (condition === "open") {
+          selectedImage = "../static/open.png";
+        } else if (condition === "delayed") {
+          selectedImage = "../static/delayed.png";
+        } else if (condition === "closed") {
+          selectedImage = "../static/closed.png";
+        } else {
+          selectedImage = null; // No valid option selected
+        }
+    
+        // Insert the selected image into the page
+        const imageContainer = document.getElementById("image-container");
+        if (selectedImage) {
+          const imgElement = document.createElement("img");
+          imgElement.src = selectedImage;
+          imgElement.alt = `Image for ${condition}`;
+
+          // Set image size
+          imgElement.width = 30; // Set width in pixels
+          imgElement.height = 30; // Set height in pixels
+
+          imageContainer.appendChild(imgElement);
+        } else {
+          imageContainer.innerText = "No image available for the selected condition.";
+        }
+      </script> -->
+</div>
+{% endblock %}

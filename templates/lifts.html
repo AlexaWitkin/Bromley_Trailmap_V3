@@ -1,0 +1,177 @@
+<!--
+lifts.html
+TrailMapInterface V2.0
+-->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <!-- This is a lead paragraph indicating the purpose of the form -->
+    <p class="lead">Lifts</p>
+
+    <form action="{{ url_for('lifts') }}" method="POST">
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="sun_mountain_express">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="sun_mountain_express">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="sun_mountain_express">Open</button>
+        <h4>Sun Mountain Express</h4>
+        <div id="specific-trail-status">
+            {% if l_stat[0] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif l_stat[0] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif l_stat[0] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="plaza_chairlift">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="plaza_chairlift">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="plaza_chairlift">Open</button>
+        <h4>Plaza Chairlift</h4>
+        <div id="specific-trail-status">
+            {% if l_stat[1] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif l_stat[1] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif l_stat[1] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="sun_chairlift">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="sun_chairlift">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="sun_chairlift">Open</button>
+        <h4>Sun Chairlift</h4>
+        <div id="specific-trail-status">
+            {% if l_stat[2] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif l_stat[2] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif l_stat[2] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="alpine_chairlift">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="alpine_chairlift">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="alpine_chairlift">Open</button>
+        <h4>Alpine Chairlift</h4>
+        <div id="specific-trail-status">
+            {% if l_stat[3] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif l_stat[3] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif l_stat[3] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="east_meadow_chairlift">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="east_meadow_chairlift">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="east_meadow_chairlift">Open</button>
+        <h4>East Meadow Chairlift</h4>
+        <div id="specific-trail-status">
+            {% if l_stat[4] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif l_stat[4] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif l_stat[4] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="star_carpet">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="star_carpet">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="star_carpet">Open</button>
+        <h4>Star Carpet</h4>
+        <div id="specific-trail-status">
+            {% if l_stat[5] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif l_stat[5] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif l_stat[5] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="blue_ribbon_quad">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="blue_ribbon_quad">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="blue_ribbon_quad">Open</button>
+        <h4>Blue Ribbon Quad</h4>
+        <div id="specific-trail-status">
+            {% if l_stat[6] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif l_stat[6] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif l_stat[6] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="lords_prayer_tbar">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="lords_prayer_tbar">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="lords_prayer_tbar">Open</button>
+        <h4>Lords Prayer Tbar</h4>
+        <div id="specific-trail-status">
+            {% if l_stat[7] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif l_stat[7] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif l_stat[7] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-danger" value="closed" name="kids_carpet">Closed</button>
+        <button type="submit" class="btn btn-warning" value="delayed" name="kids_carpet">Delayed</button>
+        <button type="submit" class="btn btn-success" value="open" name="kids_carpet">Open</button>
+        <h4>Kids Carpet</h4>
+        <div id="specific-trail-status">
+            {% if l_stat[8] == 100 %}
+              <img src="../static/open.png" alt="Open" width="30" height="30">
+            {% elif l_stat[8] == 200 %}
+              <img src="../static/delayed.png" alt="Delayed" width="30" height="30">
+            {% elif l_stat[8] == 300 %}
+              <img src="../static/closed.png" alt="Closed" width="30" height="30">
+            {% endif %}
+        </div>
+    </div>
+
+
+    </form>
+</div>
+{% endblock %}
