@@ -10,38 +10,33 @@ Alexa Witkin
     <p class="lead">Trails</p>
 
     <form action="{{ url_for('trails') }}" method="POST">
+
         {% set status_icons = {
         'open': 'open.png',
         'delayed': 'delayed.png',
         'closed': 'closed.png'
         } %}
 
-        {% for trail in t_stat.keys() %}
-        <div class="mb-4">
-            <!-- Trail name as title -->
-            <h4>{{ trail.replace('_', ' ').title() }}</h4>
+        {% for trail, status in t_stat.items() %}
+        <div class="btn-group" role="group" aria-label="Trail status buttons" style="margin-bottom: 20px;">
+            <button type="submit" class="btn btn-danger" value="closed" name="{{ trail }}">Closed</button>
+            <button type="submit" class="btn btn-warning" value="delayed" name="{{ trail }}">Delayed</button>
+            <button type="submit" class="btn btn-success" value="open" name="{{ trail }}">Open</button>
 
-            <!-- Status update buttons -->
-            <div class="btn-group mb-2" role="group" aria-label="Trail status buttons">
-                <button type="submit" class="btn btn-danger" value="closed" name="{{ trail }}">Closed</button>
-                <button type="submit" class="btn btn-warning" value="delayed" name="{{ trail }}">Delayed</button>
-                <button type="submit" class="btn btn-success" value="open" name="{{ trail }}">Open</button>
-            </div>
+            <h4 style="margin-left: 15px;">{{ trail.replace('_', ' ').title() }}</h4>
 
-            <!-- Trail status icon -->
-            <div>
-                {% set status = t_stat[trail] %}
+            <div id="specific-trail-status" style="margin-left: 15px;">
                 {% if status in status_icons %}
-                <img src="{{ url_for('static', filename=status_icons[status]) }}"
-                     alt="{{ status.title() }}" width="30" height="30">
+                <img src="{{ url_for('static', filename=status_icons[status]) }}" alt="{{ status.title() }}" width="30" height="30">
                 {% else %}
-                <span class="text-muted">No status</span>
-                {# Optionally show an 'unknown.png' here #}
-                {# <img src="{{ url_for('static', filename='unknown.png') }}" alt="Unknown" width="30" height="30"> #}
+                <span>{{ status }}</span>  {# fallback for unknown statuses #}
                 {% endif %}
             </div>
         </div>
+        <p></p>
         {% endfor %}
+
     </form>
 </div>
 {% endblock %}
+
