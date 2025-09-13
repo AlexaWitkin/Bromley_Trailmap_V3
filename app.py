@@ -11,7 +11,6 @@ import sqlite3 # included in standard python distribution
 import pandas as pd
 import io
 import serial
-##import HC_05
 
 # List of all trail names
 TRAIL_NAMES = [
@@ -26,8 +25,13 @@ TRAIL_NAMES = [
     "the_plunge"
 ]
 
+LIFT_NAMES = [
+    "sun_mountain_express", "plaza_chairlift", "sun_chairlift", "alpine_chairlift",
+    "east_meadow_chairlift", "star_carpet", "blue_ribbon_quad", "lords_prayer_tbar",
+    "kids_carpet"
+]
+
 app = Flask(__name__)
-##bluetooth = serial.Serial("/dev/rfcomm2", 9600) # send serial value
 
 @app.route("/")
 def index():
@@ -51,14 +55,6 @@ def index():
     lift_formatted_data = [dict(zip(lift_columns, row)) for row in lift_data]
     print(lift_formatted_data)
 
-    trail_status = []
-    trail_status = get_trail_status()
-    print(trail_status)
-
-    lift_status = []
-    lift_status = get_lift_status()
-    print(lift_status)
-    
     return render_template("home.html", t_data=trail_formatted_data, l_data=lift_formatted_data)
 
 
@@ -84,14 +80,6 @@ def home():
     lift_columns = ["lift", "status"]
     lift_formatted_data = [dict(zip(lift_columns, row)) for row in lift_data]
     print(lift_formatted_data)
-
-    trail_status = []
-    trail_status = get_trail_status()
-    print(trail_status)
-
-    lift_status = []
-    lift_status = get_lift_status()
-    print(lift_status)
 
     return render_template("home.html", t_data=trail_formatted_data, l_data=lift_formatted_data)
 
@@ -119,8 +107,6 @@ def trails():
 
     con.close()
 
-    # # Convert to dict for easier use in template
-    # trail_status = {row['trail_name']: row['status'] for row in trails_statuses}
     # Assuming SELECT trail_name, status returns two columns:
     trail_status = {row[0]: row[1] for row in trails_statuses}
 
@@ -135,8 +121,8 @@ def api_trail_statuses():
     rows = cur.fetchall()
     con.close()
 
-    # Convert rows to dict
-    statuses = {row['trail_name']: row['status'] for row in rows}
+    # Convert list of tuples into dict: {trail_name: status, ...}
+    statuses = {row[0]: row[1] for row in rows}
     return jsonify(statuses)
 
 
@@ -145,153 +131,33 @@ def lifts():
     con = sqlite3.connect('bromley_trailmap.db', isolation_level=None)
     cur = con.cursor()
 
-    ## Sun Mountain Express
-    cur.execute(f'SELECT status FROM Lifts WHERE lift_name = "sun_mountain_express";')
-    sun_mountain_express_status = cur.fetchone()
-
-    ## Plaza Chairlift
-    cur.execute(f'SELECT status FROM Lifts WHERE lift_name = "plaza_chairlift";')
-    plaza_chairlift_status = cur.fetchone()
-
-    ## Sun Chairlift
-    cur.execute(f'SELECT status FROM Lifts WHERE lift_name = "sun_chairlift";')
-    sun_chairlift_status = cur.fetchone()
-
-    ## Alpine Chairlift
-    cur.execute(f'SELECT status FROM Lifts WHERE lift_name = "alpine_chairlift";')
-    alpine_chairlift_status = cur.fetchone()
-
-    ## East Meadow Chairlift
-    cur.execute(f'SELECT status FROM Lifts WHERE lift_name = "east_meadow_chairlift";')
-    east_meadow_chairlift_status = cur.fetchone()
-
-    ## Star Carpet
-    cur.execute(f'SELECT status FROM Lifts WHERE lift_name = "star_carpet";')
-    star_carpet_status = cur.fetchone()
-
-    ## Blue Ribbon Quad
-    cur.execute(f'SELECT status FROM Lifts WHERE lift_name = "blue_ribbon_quad";')
-    blue_ribbon_quad_status = cur.fetchone()
-
-    ## Lords Prayer Tbar
-    cur.execute(f'SELECT status FROM Lifts WHERE lift_name = "lords_prayer_tbar";')
-    lords_prayer_tbar_status = cur.fetchone()
-
-    ## Kids Carpet
-    cur.execute(f'SELECT status FROM Lifts WHERE lift_name = "kids_carpet";')
-    kids_carpet_status = cur.fetchone()
-
     if request.method == "POST":
+        for lift_name in LIFT_NAMES:
+            new_status = request.form.get(lift_name)
+            if new_status is not None:
+                cur.execute('UPDATE Lifts SET status = ? WHERE lift_name = ?', (new_status, lift_name))
+                con.commit()
 
-        ## Sun Mountain Express
-        new_status_0 = request.form.get("sun_mountain_express")
+    cur.execute('SELECT lift_name, status FROM Lifts')
+    rows = cur.fetchall()
+    con.close()
 
-        if new_status_0 != None:
-            cur.execute(f'UPDATE Lifts SET status = "{new_status_0}" WHERE lift_name = "sun_mountain_express";')
-            con.commit()
+    # Use tuple indexes
+    lift_status = {row[0]: row[1] for row in rows}
 
-            cur.execute(f'SELECT status FROM Lifts WHERE lift_name = "sun_mountain_express";')
-            sun_mountain_express_status = cur.fetchone()
-
-        ## Plaza Chairlift
-        new_status_1 = request.form.get("plaza_chairlift")
-
-        if new_status_1 != None:
-            cur.execute(f'UPDATE Lifts SET status = "{new_status_1}" WHERE lift_name = "plaza_chairlift";')
-            con.commit()
-
-            cur.execute(f'SELECT status FROM Lifts WHERE lift_name = "plaza_chairlift";')
-            plaza_chairlift_status = cur.fetchone()
-
-        ## Sun Chairlift
-        new_status_2 = request.form.get("sun_chairlift")
-
-        if new_status_2 != None:
-            cur.execute(f'UPDATE Lifts SET status = "{new_status_2}" WHERE lift_name = "sun_chairlift";')
-            con.commit()
-
-            cur.execute(f'SELECT status FROM Lifts WHERE lift_name = "sun_chairlift";')
-            sun_chairlift_status = cur.fetchone()
-
-        ## Alpine Chairlift
-        new_status_3 = request.form.get("alpine_chairlift")
-
-        if new_status_3 != None:
-            cur.execute(f'UPDATE Lifts SET status = "{new_status_3}" WHERE lift_name = "alpine_chairlift";')
-            con.commit()
-
-            cur.execute(f'SELECT status FROM Lifts WHERE lift_name = "alpine_chairlift";')
-            alpine_chairlift_status = cur.fetchone()
-
-        ## East Meadow Chairlift
-        new_status_4 = request.form.get("east_meadow_chairlift")
-
-        if new_status_4 != None:
-            cur.execute(f'UPDATE Lifts SET status = "{new_status_4}" WHERE lift_name = "east_meadow_chairlift";')
-            con.commit()
-
-            cur.execute(f'SELECT status FROM Lifts WHERE lift_name = "east_meadow_chairlift";')
-            east_meadow_chairlift_status = cur.fetchone()
-
-        ## Star Carpet
-        new_status_5 = request.form.get("star_carpet")
-
-        if new_status_5 != None:
-            cur.execute(f'UPDATE Lifts SET status = "{new_status_5}" WHERE lift_name = "star_carpet";')
-            con.commit()
-
-            cur.execute(f'SELECT status FROM Lifts WHERE lift_name = "star_carpet";')
-            star_carpet_status = cur.fetchone()
-
-        ## Blue Ribbon Quad
-        new_status_6 = request.form.get("blue_ribbon_quad")
-
-        if new_status_6 != None:
-            cur.execute(f'UPDATE Lifts SET status = "{new_status_6}" WHERE lift_name = "blue_ribbon_quad";')
-            con.commit()
-
-            cur.execute(f'SELECT status FROM Lifts WHERE lift_name = "blue_ribbon_quad";')
-            blue_ribbon_quad_status = cur.fetchone()
-
-        ## Lords Prayer Tbar
-        new_status_7 = request.form.get("lords_prayer_tbar")
-
-        if new_status_7 != None:
-            cur.execute(f'UPDATE Lifts SET status = "{new_status_7}" WHERE lift_name = "lords_prayer_tbar";')
-            con.commit()
-
-            cur.execute(f'SELECT status FROM Lifts WHERE lift_name = "lords_prayer_tbar";')
-            lords_prayer_tbar_status = cur.fetchone()
-
-        ## Kids Carpet
-        new_status_8 = request.form.get("kids_carpet")
-
-        if new_status_8 != None:
-            cur.execute(f'UPDATE Lifts SET status = "{new_status_8}" WHERE lift_name = "kids_carpet";')
-            con.commit()
-
-            cur.execute(f'SELECT status FROM Lifts WHERE lift_name = "kids_carpet";')
-            kids_carpet_status = cur.fetchone()
-    
-    get_trail_status()
-    get_lift_status()
-
-    lift_status = []
-    lift_status = get_lift_status()
-    print(lift_status)
-
-    # print(f"Sun Mountain Express: " + sun_mountain_express_status[0])
-    # print(f"Plaza Chair: " + plaza_chairlift_status[0])
-    # print(f"Sun Chairlift: " + sun_chairlift_status[0])
-    # print(f"Alpine Chairlift: " + alpine_chairlift_status[0])
-    # print(f"East Meadow Chairlift: " + east_meadow_chairlift_status[0])
-    # print(f"Star Carpet: " + star_carpet_status[0])
-    # print(f"Blue Ribbon Quad: " + blue_ribbon_quad_status[0])
-    # print(f"Lords Prayer Tbar: " + lords_prayer_tbar_status[0])
-    # print(f"Kids Carpet: " + kids_carpet_status[0])
-
-    ##HC_05.chaseIt_open()
     return render_template("lifts.html", l_stat=lift_status)
+
+@app.route('/api/lift_statuses', methods=['GET'])
+def api_lift_statuses():
+    con = sqlite3.connect('bromley_trailmap.db')
+    cur = con.cursor()
+    cur.execute('SELECT lift_name, status FROM Lifts')
+    rows = cur.fetchall()
+    con.close()
+
+    # Convert list of tuples into dict: {lift_name: status, ...}
+    statuses = {row[0]: row[1] for row in rows}
+    return jsonify(statuses)
 
 
 @app.route("/text", methods=["GET","POST"])
@@ -317,85 +183,14 @@ def text():
     old_text = cur.fetchone()
     print(old_text[0])
 
-    get_trail_status()
-    get_lift_status()
-
     return render_template("text.html", text=old_text[0])
 
 @app.route("/help")
 def help():
     return render_template("help.html")
 
-def get_trail_status():
-    con = sqlite3.connect('bromley_trailmap.db', isolation_level=None)
-    cur = con.cursor()
-
-    ## Trails
-    cur.execute(f'SELECT status FROM Trails;')
-    trails = cur.fetchall()
-
-    trail_status = []
-    for i in range(0,len(trails)):
-        trail_status.append(trails[i][0])
-    print(trail_status)
-
-    arduino_trail_status = []
-    for i in range(0,len(trail_status)):
-        if trail_status[i] == 'open':
-            arduino_trail_status.append(100)
-        elif trail_status[i] == 'delayed':
-            arduino_trail_status.append(200)
-        elif trail_status[i] == 'closed':
-            arduino_trail_status.append(300)
-    print(arduino_trail_status)
-
-    return arduino_trail_status
-
-
-def get_lift_status():
-    con = sqlite3.connect('bromley_trailmap.db', isolation_level=None)
-    cur = con.cursor()
-
-    ## Lifts
-    cur.execute(f'SELECT status FROM Lifts;')
-    lifts = cur.fetchall()
-
-    lift_status = []
-    for i in range(0,len(lifts)):
-        lift_status.append(lifts[i][0])
-    print(lift_status)
-
-    arduino_lift_status = []
-    for i in range(0,len(lift_status)):
-        if lift_status[i] == 'open':
-            arduino_lift_status.append(100)
-        elif lift_status[i] == 'delayed':
-            arduino_lift_status.append(200)
-        elif lift_status[i] == 'closed':
-            arduino_lift_status.append(300)
-    print(arduino_lift_status)
-
-    return arduino_lift_status
-
-    
-
-
-# # Sends a serial code 'a' to Arduino
-# def send_bluetooth_data(a):
-#     string = 'X{0}'.format(a) # format of our data
-#     print('Serial code:' + string)
-#     bluetooth.write(string.encode("utf-8"))
-
-#     get_trail_status()
-#     get_lift_status()
 
 
 if __name__ == "__main__":
     app.run(debug=True)
 
-    # while True:
-    #     a = input("enter: -") # input value to be received by arduino bluetooth
-    #     ''' this is where we can determine what pins we want on to control each
-    #     component independently '''
-
-    #     send_bluetooth_data(a)
