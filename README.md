@@ -1,5 +1,5 @@
 # Bromley_TrailMap
-New interface for Bromley's trail map, utilizing Feratel's hardware.
+New interface for Bromley's trail map, ~~utilizing Feratel's hardware.~~
 ----------------------------------------------------------------------
 
 https://www.youtube.com/watch?v=xSwoM3M24W8
@@ -21,6 +21,31 @@ Materials:
 - Lots of Wires
 
 Estimated Cost: $467 - $500
+
+----------------------------------------------------------------------
+
+V3 start date: 09/06/2025
+
+----------------------------------------------------------------------
+
+Initial Steps:
+- Reformat SD card to FAT32
+- download raspberrypi OS
+  - use customized setup options for host/username/password/wireless LAN
+- set up network connectability (wifi)
+- download rpi-rgb-led-matrix repository off of github
+- create virtual environment within the pi 
+  - allows you to download cython or any other necessary packages/parsers
+- use sample files in rpi-rgb-led-matrix/bindings/python/samples to test panel
+- copy font files locally if needed 
+- sudo -E $(which python) runtext.py --led-cols=64 --led-gpio-mapping=adafruit-hat 
+--led-slowdoen-gpio=4 --text="Welcome to Bromley!"
+
+Rewrite Website Code:
+- decrease calls 
+- increase efficiency 
+- integrate CLI with Flask
+
 
 ----------------------------------------------------------------------
 
