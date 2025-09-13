@@ -25,6 +25,7 @@ TRAIL_NAMES = [
     "the_plunge"
 ]
 
+# List of all lift names
 LIFT_NAMES = [
     "sun_mountain_express", "plaza_chairlift", "sun_chairlift", "alpine_chairlift",
     "east_meadow_chairlift", "star_carpet", "blue_ribbon_quad", "lords_prayer_tbar",
@@ -112,6 +113,7 @@ def trails():
 
     return render_template("trails.html", t_stat=trail_status)
 
+## TODO: write correct api integrations with raspberrypi for trails
 # Add a simple route that returns all trail statuses as JSON, which the Pi can poll regularly
 @app.route('/api/trail_statuses', methods=['GET'])
 def api_trail_statuses():
@@ -146,6 +148,8 @@ def lifts():
     lift_status = {row[0]: row[1] for row in rows}
 
     return render_template("lifts.html", l_stat=lift_status)
+
+## TODO: write correct api integrations with raspberrypi for lifts
 
 @app.route('/api/lift_statuses', methods=['GET'])
 def api_lift_statuses():
@@ -184,6 +188,9 @@ def text():
     print(old_text[0])
 
     return render_template("text.html", text=old_text[0])
+
+## TODO: write correct api integrations with raspberrypi for scrolling text
+
 
 @app.route("/help")
 def help():
