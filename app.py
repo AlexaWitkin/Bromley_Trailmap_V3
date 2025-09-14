@@ -240,6 +240,6 @@ threading.Thread(target=scrolling_text, daemon=True).start()
 
 
 if __name__ == "__main__":
-    #app.run(debug=True) # for local debugging (dev)
-    app.run(host="0.0.0.0", port=5000) # for network access
+    app.run(debug=True) # for local debugging (dev)
+    #app.run(host="0.0.0.0", port=5000) # for network access
 
