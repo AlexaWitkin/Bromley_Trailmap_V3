@@ -5,7 +5,7 @@ Alexa Witkin
 """
 from flask import Flask, render_template, request, redirect, url_for, jsonify, make_response
 from rgbmatrix import RGBMatrix, RGBMatrixOptions # from rpi-rgb-led-matrix lib
-from PIL import Image, ImageDraw, ImageFont # for led panel
+#from PIL import Image, ImageDraw, ImageFont # for led panel
 import sqlite3 # included in standard python distribution
 import threading
 import time
@@ -212,7 +212,7 @@ def text():
 
 def scrolling_text():
     font = graphics.Font()
-    font.LoadFont("/home/pi/rpi-rgb-led-matrix/fonts/6x10.bdf")
+    font.LoadFont("/home/pi/rpi-rgb-led-matrix/fonts/7x13.bdf")
     text_color = graphics.Color(255, 255, 0)
     pos = canvas.width
 
@@ -240,6 +240,6 @@ threading.Thread(target=scrolling_text, daemon=True).start()
 
 
 if __name__ == "__main__":
-    app.run(debug=True) # for local debugging (dev)
-    #app.run(host="0.0.0.0", port=5000) # for network access
+    #app.run(debug=True) # for local debugging (dev)
+    app.run(host="0.0.0.0", port=5000) # for network access
 
