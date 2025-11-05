@@ -10,7 +10,7 @@
     <!-- Can be used to add basic CSS (the design part of web design) -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link href="../static/style.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" media="screen" />
 
     <!-- The title of the HTML page is set dynamically using the block tag -->
     <title>{% block title %} Bromley TrailMap {% endblock %}</title>
