@@ -212,9 +212,23 @@ def text():
 
 
 def scrolling_text():
+    global canvas
+
+    import os
+    from rgbmatrix import graphics
+
+    #os.chdir("/home/bromley/rpi-rgb-led-matrix")
+    #print("CWD changed to:", os.getcwd())
+
     font = graphics.Font()
-    font.LoadFont("/home/pi/rpi-rgb-led-matrix/fonts/7x13.bdf")
-    text_color = graphics.Color(255, 255, 0)
+    font.LoadFont("/home/bromley/rpi-rgb-led-matrix/fonts/7x13.bdf")  # relative path
+    print("Font loaded successfully")
+    print("Current working directory:", os.getcwd())
+#-------------------------------------------------------
+
+   # font = graphics.Font()
+   # font.LoadFont("fonts/7x13.bdf")
+    text_color = graphics.Color(255, 0, 0)
     pos = canvas.width
 
     while True:
