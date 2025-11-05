@@ -4,11 +4,12 @@ TrailMapInterface V3.0
 Alexa Witkin
 """
 from flask import Flask, render_template, request, redirect, url_for, jsonify, make_response
-from rgbmatrix import RGBMatrix, RGBMatrixOptions # from rpi-rgb-led-matrix lib
+from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics # from rpi-rgb-led-matrix lib
 #from PIL import Image, ImageDraw, ImageFont # for led panel
 import sqlite3 # included in standard python distribution
 import threading
 import time
+import os
 
 ## ----------------------------------------------------------------------------------------
 # Setup LED matrix
