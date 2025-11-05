@@ -27,6 +27,33 @@ Estimated Cost: $467 - $500
 V3 start date: 09/06/2025
 
 ----------------------------------------------------------------------
+File Structure:
+.
+├── csv/
+│   ├── Lifts.csv
+│   ├── Text.csv
+│   ├── Trails.csv
+│   └── csv_to_sqlite.py
+├── fonts/
+│   └── 7x13.bdf
+├── static/
+│   ├── closed.png
+│   ├── delayed.png
+│   ├── open.png
+│   ├── style.css
+│   └── unknown.png
+├── templates/
+│   ├── base.html
+│   ├── help.html
+│   ├── home.html
+│   ├── lifts.html
+│   ├── text.html
+│   └── trails.html
+├── textures/
+│   └── Bromley_Schematic.jpg
+├── README.md
+├── app.py
+└── bromley_trailmap.db
 
 Initial Steps:
 - Reformat SD card to FAT32
