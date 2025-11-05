@@ -28,6 +28,8 @@ V3 start date: 09/06/2025
 
 ----------------------------------------------------------------------
 File Structure:
+
+```text
 .
 ├── csv/
 │   ├── Lifts.csv
@@ -54,7 +56,7 @@ File Structure:
 ├── README.md
 ├── app.py
 └── bromley_trailmap.db
-
+```
 Initial Steps:
 - Reformat SD card to FAT32
 - download raspberrypi OS
