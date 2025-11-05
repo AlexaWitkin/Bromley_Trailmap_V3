@@ -5,7 +5,7 @@ import sqlite3 # included in standard python distribution
 import pandas as pd
 
 # create new database
-con = sqlite3.connect('bromley_trailmap.db')
+con = sqlite3.connect('../bromley_trailmap.db')
 cur = con.cursor()
 
 # load customers.csv into database
