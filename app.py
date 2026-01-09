@@ -319,6 +319,19 @@ def status_display():
         canvas = matrix.SwapOnVSync(canvas)
         time.sleep(0.5)
 
+def safe_thread_loop(target_func, *args, **kwargs):
+    """
+    Runs a function in a loop inside a thread.
+    If an exception occurs, it logs it, waits a second, and restarts the function.
+    """
+    while True:
+        try:
+            target_func(*args, **kwargs)
+        except Exception as e:
+            print(f"Error in thread {target_func.__name__}: {e}")
+            import traceback
+            traceback.print_exc()
+            time.sleep(1)  # short delay before retry
 
 
 
@@ -328,11 +341,11 @@ def help():
 
 ####----------START THE THREAD-------------####
 # Start the display loop when the app starts
-# Start only the relevant thread
+# Use safe_thread_loop to auto-recover from exceptions
 if DISPLAY_MODE == "text":
-    threading.Thread(target=scrolling_text, daemon=True).start()
+    threading.Thread(target=safe_thread_loop, args=(scrolling_text,), daemon=True).start()
 elif DISPLAY_MODE in ["trails", "lifts"]:
-    threading.Thread(target=status_display, daemon=True).start()
+    threading.Thread(target=safe_thread_loop, args=(status_display,), daemon=True).start()
 
 
 
