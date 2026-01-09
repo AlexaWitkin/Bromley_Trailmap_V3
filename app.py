@@ -24,11 +24,35 @@ options.gpio_slowdown = 4
 matrix = RGBMatrix(options=options)
 canvas = matrix.CreateFrameCanvas()
 
+# Set DISPLAY_MODE per Pi
+# Text Pi
+DISPLAY_MODE = "text"
+# Trails Pi
+# DISPLAY_MODE = "trails"
+# Lifts Pi
+# DISPLAY_MODE = "lifts"
+
 display_lock = threading.Lock()
 
 # Global for current message
 current_message = "Welcome to Bromley!"
 message_lock = threading.Lock()
+
+# Get current status of the trails and lifts
+current_status_snapshot = {
+    "trails": {},
+    "lifts": {}
+}
+
+status_lock = threading.Lock()
+
+STATUS_COLORS = {
+    "open": graphics.Color(0, 255, 0),
+    "closed": graphics.Color(255, 0, 0),
+    "delayed": graphics.Color(255, 255, 0)
+}
+
+
 
 ## ----------------------------------------------------------------------------------------
 
@@ -51,6 +75,30 @@ LIFT_NAMES = [
     "east_meadow_chairlift", "star_carpet", "blue_ribbon_quad", "lords_prayer_tbar",
     "kids_carpet"
 ]
+
+# List of the trails in each panel
+TRAIL_PANELS = [
+    ["chase_it", "crackerjack", "learning_zone", "lower_boulevard"],
+    ["lower_east_meadow", "lower_thruway", "plaza", "proutys_past"],
+    ["run_around_1", "run_around_2", "run_around_3", "run_around_4"],
+    ["school_slope", "woods_run", "lift_line", "lords_prayer"],
+    ["lower_twister", "pushover", "ridge", "route_100"],
+    ["shincracker", "snow_ranger", "spring_trail", "sunset_pass"],
+    ["upper_boulevard", "upper_east_meadow", "upper_thruway", "upper_twister"],
+    ["west_meadow", "yodeler", "avalanche", "blue_ribbon"],
+    ["corkscrew", "havoc", "little_dipper", "lower_stargazer"],
+    ["no_name_chute", "pabst_panic", "pabst_peril", "stargazer"],
+    ["sunder", "the_garden", "avalanche_glade", "everglade"],
+    ["orion", "spring_fling", "the_glade", "the_plunge"]
+]
+
+# List of the lifts in each panel
+LIFT_PANELS = [
+    ["sun_mountain_express", "plaza_chairlift", "sun_chairlift", "alpine_chairlift"],
+    ["east_meadow_chairlift", "star_carpet", "blue_ribbon_quad", "lords_prayer_tbar"],
+    ["kids_carpet"]
+]
+
 
 app = Flask(__name__)
 
@@ -130,23 +178,10 @@ def trails():
 
     # Assuming SELECT trail_name, status returns two columns:
     trail_status = {row[0]: row[1] for row in trails_statuses}
+    with status_lock:
+        current_status_snapshot["trails"] = trail_status
 
     return render_template("trails.html", t_stat=trail_status)
-
-## TODO: write correct api integrations with raspberrypi for trails
-# Add a simple route that returns all trail statuses as JSON, which the Pi can poll regularly
-@app.route('/api/trail_statuses', methods=['GET'])
-def api_trail_statuses():
-    con = sqlite3.connect('bromley_trailmap.db', isolation_level=None)
-    cur = con.cursor()
-    cur.execute('SELECT trail_name, status FROM Trails')
-    rows = cur.fetchall()
-    con.close()
-
-    # Convert list of tuples into dict: {trail_name: status, ...}
-    statuses = {row[0]: row[1] for row in rows}
-    return jsonify(statuses)
-
 
 @app.route("/lifts", methods=["GET","POST"])
 def lifts():
@@ -166,22 +201,11 @@ def lifts():
 
     # Use tuple indexes
     lift_status = {row[0]: row[1] for row in rows}
+    with status_lock:
+        current_status_snapshot["lifts"] = lift_status
 
     return render_template("lifts.html", l_stat=lift_status)
 
-## TODO: write correct api integrations with raspberrypi for lifts
-
-@app.route('/api/lift_statuses', methods=['GET'])
-def api_lift_statuses():
-    con = sqlite3.connect('bromley_trailmap.db')
-    cur = con.cursor()
-    cur.execute('SELECT lift_name, status FROM Lifts')
-    rows = cur.fetchall()
-    con.close()
-
-    # Convert list of tuples into dict: {lift_name: status, ...}
-    statuses = {row[0]: row[1] for row in rows}
-    return jsonify(statuses)
 
 
 @app.route("/text", methods=["GET", "POST"])
@@ -244,14 +268,79 @@ def scrolling_text():
         canvas = matrix.SwapOnVSync(canvas)
         time.sleep(0.05)
 
+def draw_check(canvas, x, y, color):
+    graphics.DrawLine(canvas, x+1, y+4, x+3, y+6, color)
+    graphics.DrawLine(canvas, x+3, y+6, x+7, y+1, color)
+
+def draw_x(canvas, x, y, color):
+    graphics.DrawLine(canvas, x+1, y+1, x+6, y+6, color)
+    graphics.DrawLine(canvas, x+6, y+1, x+1, y+6, color)
+
+def draw_circle(canvas, x, y, color):
+    graphics.DrawCircle(canvas, x+4, y+4, 3, color)
+
+def draw_status_slot(canvas, x_offset, y_offset, name, status, font):
+    color = STATUS_COLORS.get(status, graphics.Color(255, 255, 255))
+
+    # Icon
+    if status == "open":
+        draw_check(canvas, x_offset + 2, y_offset, color)
+    elif status == "closed":
+        draw_x(canvas, x_offset + 2, y_offset, color)
+    elif status == "delayed":
+        draw_circle(canvas, x_offset + 2, y_offset, color)
+
+    # Name
+    graphics.DrawText(
+        canvas,
+        font,
+        x_offset + 14,
+        y_offset + 7,
+        color,
+        name.replace("_", " ").upper()
+    )
+
+def status_display():
+    global canvas
+
+    font = graphics.Font()
+    font.LoadFont("/home/bromley/rpi-rgb-led-matrix/fonts/6x10.bdf")
+
+    panels = TRAIL_PANELS if DISPLAY_MODE == "trails" else LIFT_PANELS
+
+    while True:
+        with status_lock:
+            statuses = current_status_snapshot[DISPLAY_MODE]
+
+        canvas.Clear()
+
+        for panel_idx, panel_items in enumerate(panels):
+            x_offset = panel_idx * 64
+
+            for row_idx, name in enumerate(panel_items):
+                y_offset = row_idx * 8
+                status = statuses.get(name, "closed")
+
+                draw_status_slot(canvas, x_offset, y_offset, name, status, font)
+
+        canvas = matrix.SwapOnVSync(canvas)
+        time.sleep(0.5)
+
+
+
 
 @app.route("/help")
 def help():
     return render_template("help.html")
 
-
+####----------START THE THREAD-------------####
 # Start the display loop when the app starts
-threading.Thread(target=scrolling_text, daemon=True).start()
+# Start only the relevant thread
+if DISPLAY_MODE == "text":
+    threading.Thread(target=scrolling_text, daemon=True).start()
+elif DISPLAY_MODE in ["trails", "lifts"]:
+    threading.Thread(target=status_display, daemon=True).start()
+
 
 
 if __name__ == "__main__":
