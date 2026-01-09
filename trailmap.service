@@ -1,0 +1,15 @@
+[Unit]
+Description=Bromley TrailMap Service
+After=network.target
+
+[Service]
+Type=simple
+User=bromley
+WorkingDirectory=/home/bromley/Bromley_Trailmap_V3
+ExecStart=/home/bromley/Bromley_Trailmap_V3/start_trailmap.sh
+Restart=always
+RestartSec=10
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

@@ -24,13 +24,9 @@ options.gpio_slowdown = 4
 matrix = RGBMatrix(options=options)
 canvas = matrix.CreateFrameCanvas()
 
-# Set DISPLAY_MODE per Pi
-# Text Pi
-DISPLAY_MODE = "text"
-# Trails Pi
-# DISPLAY_MODE = "trails"
-# Lifts Pi
-# DISPLAY_MODE = "lifts"
+# Set DISPLAY_MODE per Pi (dynamically via environment variable)
+DISPLAY_MODE = os.environ.get("DISPLAY_MODE", "text")  # default to "text" if not set
+print(f"Starting TrailMapInterface in {DISPLAY_MODE} mode")
 
 display_lock = threading.Lock()
 
@@ -237,9 +233,6 @@ def text():
 
 def scrolling_text():
     global canvas
-
-    import os
-    from rgbmatrix import graphics
 
     #os.chdir("/home/bromley/rpi-rgb-led-matrix")
     #print("CWD changed to:", os.getcwd())
