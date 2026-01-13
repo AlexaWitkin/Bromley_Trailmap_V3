@@ -54,6 +54,7 @@ File Structure:
 ├── textures/
 │   └── Bromley_Schematic.jpg
 ├── README.md
+├── requirements.txt
 ├── app.py
 ├── bromley_trailmap.db
 ├── start_trailmap.sh
