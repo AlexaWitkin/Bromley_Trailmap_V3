@@ -55,7 +55,9 @@ File Structure:
 │   └── Bromley_Schematic.jpg
 ├── README.md
 ├── app.py
-└── bromley_trailmap.db
+├── bromley_trailmap.db
+├── start_trailmap.sh
+└── trailmap.service
 ```
 Initial Steps:
 - Reformat SD card to FAT32
