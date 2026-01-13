@@ -17,13 +17,13 @@ source /home/bromley/myenv/bin/activate
 # Automatically set DISPLAY_MODE based on Pi hostname
 HOSTNAME=$(hostname)
 case "$HOSTNAME" in
-    text-pi)
+    bromleypi)
         export DISPLAY_MODE=text
         ;;
-    trails-pi)
+    trailspi)
         export DISPLAY_MODE=trails
         ;;
-    lifts-pi)
+    liftspi)
         export DISPLAY_MODE=lifts
         ;;
     *)
