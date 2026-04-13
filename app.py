@@ -43,9 +43,9 @@ current_status_snapshot = {
 status_lock = threading.Lock()
 
 STATUS_COLORS = {
-    "open": graphics.Color(0, 255, 0),
+    "open": graphics.Color(0, 0, 255), # blue and green registers swapped for 2.5mm pitch panel
     "closed": graphics.Color(255, 0, 0),
-    "delayed": graphics.Color(255, 255, 0)
+    "delayed": graphics.Color(255, 0, 255) # blue and green registers swapped for 2.5mm pitch panel
 }
 
 
@@ -262,15 +262,15 @@ def scrolling_text():
         time.sleep(0.05)
 
 def draw_check(canvas, x, y, color):
-    graphics.DrawLine(canvas, x+1, y+4, x+3, y+6, color)
-    graphics.DrawLine(canvas, x+3, y+6, x+7, y+1, color)
+    graphics.DrawLine(canvas, x+1, y+4, x+3, y+6, color) # (canvas, x+1, y+4, x+3, y+6, color) for testing
+    graphics.DrawLine(canvas, x+3, y+6, x+7, y+1, color) # (canvas, x+3, y+6, x+7, y+1, color) for testing
 
 def draw_x(canvas, x, y, color):
-    graphics.DrawLine(canvas, x+1, y+1, x+6, y+6, color)
-    graphics.DrawLine(canvas, x+6, y+1, x+1, y+6, color)
+    graphics.DrawLine(canvas, x+1, y+1, x+6, y+6, color) # (canvas, x+1, y+1, x+6, y+6, color) for testing
+    graphics.DrawLine(canvas, x+6, y+1, x+1, y+6, color) # (canvas, x+6, y+1, x+1, y+6, color) for testing
 
 def draw_circle(canvas, x, y, color):
-    graphics.DrawCircle(canvas, x+4, y+4, 3, color)
+    graphics.DrawCircle(canvas, x+4, y+4, 3, color) # (canvas, x+4, y+4, 3, color) for testing
 
 def draw_status_slot(canvas, x_offset, y_offset, name, status, font):
     color = STATUS_COLORS.get(status, graphics.Color(255, 255, 255))
@@ -283,15 +283,16 @@ def draw_status_slot(canvas, x_offset, y_offset, name, status, font):
     elif status == "delayed":
         draw_circle(canvas, x_offset + 2, y_offset, color)
 
-    # Name
-    graphics.DrawText(
-        canvas,
-        font,
-        x_offset + 14,
-        y_offset + 7,
-        color,
-        name.replace("_", " ").upper()
-    )
+    # Trail/lift name display for testing
+    # # Name
+    # graphics.DrawText(
+    #     canvas,
+    #     font,
+    #     x_offset + 14,
+    #     y_offset + 7,
+    #     color,
+    #     name.replace("_", " ").upper()
+    # )
 
 def status_display():
     global canvas
@@ -308,10 +309,12 @@ def status_display():
         canvas.Clear()
 
         for panel_idx, panel_items in enumerate(panels):
-            x_offset = panel_idx * 64
-
+            # x_offset = panel_idx * 64 (for testing)
+            x_start_offset = panel_idx * 64
+            y_offset = 10
             for row_idx, name in enumerate(panel_items):
-                y_offset = row_idx * 8
+                # y_offset = row_idx * 8 (for testing)
+                x_offset = x_start_offset + (row_idx * 16)
                 status = statuses.get(name, "closed")
 
                 draw_status_slot(canvas, x_offset, y_offset, name, status, font)
